@@ -1,17 +1,10 @@
-
-
 const container = document.getElementById("scheduleContainer");
 const errorMsg = document.getElementById("errorMsg");
 const triggerBar = document.getElementById("triggerBar");
 
-// Friends' JSON filenames
-const friends = ["HarrisonKleinSchedule.JSON", "SalMontecalvo.JSON", "ZahrEvansSchedule.JSON"];
+const friends = ["HarrisonKleinSchedule.json", "SalMontecalvo.json", "ZahrEvansSchedule.json"];
 let currentIndex = 0;
 
-/**
- * Async function to load a friend's schedule from a JSON file
- * @param {string} fileName - name of JSON file to load
- */
 async function loadSchedule(fileName) {
   try {
     container.innerHTML = "";
@@ -23,8 +16,9 @@ async function loadSchedule(fileName) {
 
     const data = await response.json();
 
-
     data.forEach((cls) => {
+      const quarters = Array.isArray(cls.quarters) ? cls.quarters.join(", ") : "No quarters listed"; // Check if quarters is an array
+
       const html = `
         <div class="col-md-4">
           <div class="card h-100">
@@ -35,7 +29,7 @@ async function loadSchedule(fileName) {
                 <strong>Room:</strong> ${cls.roomNumber}<br>
                 <strong>Period:</strong> ${cls.period}<br>
                 <strong>Subject:</strong> ${cls.subjectArea}<br>
-                <strong>Quarters:</strong> ${cls.quarters.join(", ")}
+                <strong>Quarters:</strong> ${quarters}
               </p>
             </div>
           </div>
@@ -51,9 +45,17 @@ async function loadSchedule(fileName) {
   }
 }
 
-triggerBar.addEventListener("mouseenter", () => {
-  currentIndex = (currentIndex + 1) % friends.length;
-  loadSchedule(friends[currentIndex]);
+window.addEventListener("keydown", (event) => {
+  if (event.key === "1") {
+    currentIndex = 0;
+    loadSchedule(friends[currentIndex]);
+  } else if (event.key === "2") {
+    currentIndex = 1;
+    loadSchedule(friends[currentIndex]);
+  } else if (event.key === "3") {
+    currentIndex = 2;
+    loadSchedule(friends[currentIndex]);
+  }
 });
 
 window.addEventListener("DOMContentLoaded", () => {
