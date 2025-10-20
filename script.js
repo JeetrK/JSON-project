@@ -46,13 +46,13 @@ async function loadSchedule(fileName) {
 }
 
 window.addEventListener("keydown", (event) => {
-  if (event.key === "1") {
+  if (event.key === "h") {
     currentIndex = 0;
     loadSchedule(friends[currentIndex]);
-  } else if (event.key === "2") {
+  } else if (event.key === "z") {
     currentIndex = 1;
     loadSchedule(friends[currentIndex]);
-  } else if (event.key === "3") {
+  } else if (event.key === "s") {
     currentIndex = 2;
     loadSchedule(friends[currentIndex]);
   }
